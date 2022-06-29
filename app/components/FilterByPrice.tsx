@@ -26,6 +26,22 @@ const AsideFilterByPrice = styled.aside`
     label {
       padding-left: 10px;
     }
+
+    input {
+      --webkit-appearance: none;
+      --moz-appearance: none;
+      appearance: none;
+      font: inherit;
+      width: 1.15em;
+      height: 1.15em;
+      border: 0.15em solid ${props => props.theme.colors.grey};
+      border-radius: 50%;
+      transition: 0.4s ease-in-out;
+
+      &:checked {
+        background-color: ${props => props.theme.colors.primary};
+      }
+    }
   }
 
   @media (max-width: 768px) {
