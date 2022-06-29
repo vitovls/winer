@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import MyHead from "../components/MyHead";
 import ProductList from "../components/ProductList";
+import { IResponseProducts } from "../interfaces/IProducts";
 import GlobalStyle from "../styles/Global.styled";
+import FoundProducts from "../styles/ProductsFounds";
 import theme from "../styles/theme";
 
 export default function Home() {
 
-  const [products, setProducts] = useState({
-    items: [],
-  });
+  const [products, setProducts] = useState<IResponseProducts>();
 
   const [pagination, setPagination] = useState({
     currentPage: 1,
@@ -30,10 +30,17 @@ export default function Home() {
 
   return (
     <>
-      <MyHead /> 
+      <MyHead />
       <ThemeProvider theme={theme}>
-      <GlobalStyle />
-        <ProductList products={products.items} />
+        <GlobalStyle />
+        {
+          products && (
+            <>
+              <FoundProducts><strong>{products.totalItems}</strong> produtos encontrados</FoundProducts>
+              <ProductList products={products.items} />
+            </>
+          )
+        }
       </ThemeProvider>
     </>
   );
