@@ -4,7 +4,7 @@ import styled from "styled-components";
 import ITheme from "../interfaces/ITheme";
 
 const StyledCardProduct = styled.section`
-background-color: #fff;
+background-color: ${props => props.theme.colors.white};
 border-radius: 5px;	
 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 padding: 20px;
@@ -20,7 +20,7 @@ justify-content: center;
 }
 
 .product-discount {
-  background-color: ${props => props.theme.colors.orange};
+  background-color: ${props => props.theme.colors.tertiary};
   color: ${props => props.theme.colors.white};
   padding: 5px 10px;
 `;

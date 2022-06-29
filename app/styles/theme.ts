@@ -4,9 +4,9 @@ const theme = {
     secondary: "#7EBC43",
     tertiary: "#f79552",
     background: "#DEDEDE",
-    backgroundSecondary: "#888888",
-    whiteText: "#FFFFFF",
-    blackText: "#000000",
+    white: "#FFFFFF",
+    text: "#000000",
+    grey: "#888888",
   },
   fonts: {
     primary: "Lato, sans-serif",
