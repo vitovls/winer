@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import FilterByPrice from "../components/FilterByPrice";
 import Header from "../components/Header";
 import ProductList from "../components/ProductList";
 import { IResponseProducts } from "../interfaces/IProducts";
@@ -8,6 +9,10 @@ import FoundProducts from "../styles/ProductsFounds";
 
 const StoreStyled = styled.div`
   background-color: ${props => props.theme.colors.background};
+
+  .main {
+    display: flex;
+  }
 `;
 
 export default function Home() {
@@ -37,8 +42,10 @@ export default function Home() {
         {
           products && (
             <>
-              <FoundProducts><strong>{products.totalItems}</strong> produtos encontrados</FoundProducts>
-              <ProductList products={products.items} />
+              <section className="main">
+                <FilterByPrice />
+                <ProductList products={products} />
+              </section>
             </>
           )
         }
