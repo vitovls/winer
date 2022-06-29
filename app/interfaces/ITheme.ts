@@ -3,6 +3,7 @@ export default interface ITheme {
     primary: string;
     secondary: string;
     tertiary: string;
+    quaternary: string;
     background: string;
     backgroundSecondary: string;
     whiteText: string;
