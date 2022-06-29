@@ -11,6 +11,16 @@ const HeaderStyled = styled.header`
 
   a {
     cursor: pointer;
+
+    &:hover {
+      border-bottom: 2px solid ${props => props.theme.colors.primary};
+      transition: 0.2s ease-in-out;
+    }
+  }
+  
+  .selected-link {
+    color: ${props => props.theme.colors.primary};
+    border-bottom: 2px solid ${props => props.theme.colors.primary};
   }
 
   .links-header {
@@ -35,7 +45,7 @@ export default function Header() {
       <Image className="logo" width="150px" height="150px" src="/wine-logo.png" />
       <section className="links-header">
         <a>Clube</a>
-        <a>Loja</a>
+        <a className="selected-link">Loja</a>
         <a>Produtores</a>
         <a>Ofertas</a>
         <a>Eventos</a>
