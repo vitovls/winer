@@ -4,6 +4,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    domains: ['www.wine.com.br'],
+  },
 };
 
 module.exports = nextConfig;
