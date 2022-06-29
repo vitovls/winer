@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { ThemeProvider } from "styled-components";
-import MyHead from "../components/MyHead";
+import styled from "styled-components";
+import Header from "../components/Header";
 import ProductList from "../components/ProductList";
 import { IResponseProducts } from "../interfaces/IProducts";
-import GlobalStyle from "../styles/Global.styled";
 import FoundProducts from "../styles/ProductsFounds";
-import theme from "../styles/theme";
+
+
+const StoreStyled = styled.div`
+  background-color: ${props => props.theme.colors.background};
+`;
 
 export default function Home() {
 
@@ -29,10 +32,8 @@ export default function Home() {
   }, [products])
 
   return (
-    <>
-      <MyHead />
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
+    <StoreStyled>
+        <Header />
         {
           products && (
             <>
@@ -41,7 +42,6 @@ export default function Home() {
             </>
           )
         }
-      </ThemeProvider>
-    </>
+    </StoreStyled>
   );
 }
