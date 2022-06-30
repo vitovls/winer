@@ -1,9 +1,11 @@
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import FilterByPrice from "../components/FilterByPrice";
 import Header from "../components/Header";
 import ProductList from "../components/ProductList";
 import { IProduct, IResponseProducts } from "../interfaces/IProducts";
+import FoundProducts from "../styles/ProductsFounds";
 
 
 const StoreStyled = styled.div`
@@ -37,6 +39,20 @@ const StoreStyled = styled.div`
       }
     }
   }
+`;
+
+const NotFound = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: ${props => props.theme.colors.background};
+  color: ${props => props.theme.colors.primary};
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 20px;
+  padding: 20px;
 `;
 
 export default function Home() {
@@ -118,17 +134,20 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (filter !== "") {
-      filterData(filter);
-    } else {
-      setLoading(true);
-      fetch(`${BASE_URL}`)
-        .then(response => response.json())
-        .then(data => {
-          setProducts(data)
-          setLoading(false);
-        });
-    }
+    setLoading(true);
+    setTimeout(() => {
+      if (filter !== "") {
+        filterData(filter);
+      } else {
+        setLoading(true);
+        fetch(`${BASE_URL}`)
+          .then(response => response.json())
+          .then(data => {
+            setProducts(data)
+            setLoading(false);
+          });
+      }
+    }, 300);
   }, [filter])
 
   return (
@@ -145,8 +164,13 @@ export default function Home() {
               </section>
             ) : 
             (
-              products && (
-                <ProductList cart={{cart, setCart}} products={products} />
+              products && products.items.length > 0 ? (
+                <ProductList products={products} cart={{cart, setCart}} />
+              ) : (
+                <NotFound>
+                  <Image src="/sad-wine.png" alt="Not Found" width={300} height={300} />
+                  <h3>Nenhum produto encontrado</h3>
+                </NotFound>
               )
             )
           }
