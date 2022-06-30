@@ -67,7 +67,7 @@ export default function Home() {
 
   const [filter, setFilter] = useState("");
 
-  const {cart, setCart} = useContext(AppContext)
+  const { setCart } = useContext(AppContext)
 
   useEffect(() => {
     const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
