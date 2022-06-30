@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { IProduct } from "../interfaces/IProducts";
@@ -33,6 +34,7 @@ const HeaderStyled = styled.header`
 
     .selected-link {
       border-bottom: 2px solid ${props => props.theme.colors.primary};
+      color: ${props => props.theme.colors.primary};
     }
   }
 
@@ -74,9 +76,11 @@ export default function Header() {
         <a>
           Clube
         </a>
-        <a className="selected-link">
+        <Link href="/">
+          <a className="selected-link">
           Loja
-        </a>
+          </a>
+        </Link>
         <a>
           Produtores
         </a>

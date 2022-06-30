@@ -20,6 +20,14 @@ const GlobalStyle = createGlobalStyle<{ theme: ITheme }>`
     font-family: ${({ theme }) => theme.fonts.primary};
     font-weight: 700;
   }
+
+  a {
+    text-decoration: none;
+    
+    &:visited {
+      color: inherit;
+    }
+  }
 `;
 
 
