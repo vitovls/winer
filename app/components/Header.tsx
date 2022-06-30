@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { useContext } from "react";
 import styled from "styled-components";
 import { IProduct } from "../interfaces/IProducts";
+import AppContext from "../utils/AppContext";
 
 const HeaderStyled = styled.header`
   display: flex;
@@ -57,7 +59,10 @@ const HeaderStyled = styled.header`
 
 `;
 
-export default function Header({ cart }: { cart: IProduct[] }) {
+export default function Header() {
+
+  const { cartQuantity } = useContext(AppContext);
+
   return (
     <HeaderStyled>
       <Image className="logo" width="150px" height="150px" src="/wine-logo.png" />
@@ -88,7 +93,7 @@ export default function Header({ cart }: { cart: IProduct[] }) {
         <a className="cart">
           <Image width="56px" height="56px" src="/winebox.png" />
           <span className="cart-icon">
-            {cart.length}
+            {cartQuantity}
           </span>
         </a>
       </section>

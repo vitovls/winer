@@ -2,9 +2,10 @@ import Image from "next/image";
 import { IProduct } from "../interfaces/IProducts";
 import styled from "styled-components";
 import ITheme from "../interfaces/ITheme";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import AppContext from "../utils/AppContext";
 
 const StyledCardProduct = styled.section`
 .product-container {
@@ -88,10 +89,13 @@ export default function CardProduct({ product }: { product: IProduct }) {
 
   const router = useRouter()
 
+  const { setCartQuantity } = useContext(AppContext);
+
   const addToCart = () => {
     const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
     const newCart = [...cartStorage, product];
     localStorage.setItem("cart", JSON.stringify(newCart));
+    setCartQuantity(newCart.length);
   }
 
   return (

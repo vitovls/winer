@@ -11,9 +11,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   
   const [cart, setCart] = useState<IProduct[]>([]);
 
+  const [cartQuantity, setCartQuantity] = useState<number>(0);
+
   const value = {
     cart,
     setCart,
+    cartQuantity,
+    setCartQuantity,
   }
 
   return (

@@ -153,7 +153,7 @@ export default function Home() {
 
   return (
     <StoreStyled>
-      <Header cart={cart} />
+      <Header />
       <>
         <section className="main">
           <FilterByPrice actions={{ filter, setFilter }} />
