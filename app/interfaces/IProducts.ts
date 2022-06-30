@@ -16,7 +16,8 @@ export interface IProduct {
   priceNonMember: number;
   type: string;
   classification: string;
-  size: string;
+  size?: string;
+  volume?: number;
   rating: number;
   avaliations: number;
   country: string;
