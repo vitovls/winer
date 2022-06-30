@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { IProduct } from "../interfaces/IProducts";
 import AppContext from "../utils/AppContext";
@@ -61,7 +61,11 @@ const HeaderStyled = styled.header`
 
 export default function Header() {
 
-  const { cartQuantity } = useContext(AppContext);
+  const { cart, cartQuantity, setCartQuantity } = useContext(AppContext);
+
+  useEffect(() => {
+    setCartQuantity(cart.length);
+  }, [cart]);
 
   return (
     <HeaderStyled>
