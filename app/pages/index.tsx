@@ -50,6 +50,13 @@ export default function Home() {
 
   const [filter, setFilter] = useState("");
 
+  const [cart, setCart] = useState<IProduct[]>([]);
+
+  useEffect(() => {
+    const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
+    setCart(cartStorage);
+  }, [cart]);
+
   const filterByPrice = async (data: IResponseProducts, query: number | number[]) => {
     if (typeof query === "number" && query === 40) {
       setLoading(true);
@@ -126,7 +133,7 @@ export default function Home() {
 
   return (
     <StoreStyled>
-      <Header />
+      <Header cart={cart} />
       <>
         <section className="main">
           <FilterByPrice actions={{ filter, setFilter }} />
@@ -139,7 +146,7 @@ export default function Home() {
             ) : 
             (
               products && (
-                <ProductList products={products} />
+                <ProductList cart={{cart, setCart}} products={products} />
               )
             )
           }

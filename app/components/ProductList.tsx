@@ -24,13 +24,13 @@ const StyledProductList = styled.section`
 `;
 
 
-export default function ProductList({ products }: { products: IResponseProducts }) {
+export default function ProductList({ products, cart }: { products: IResponseProducts, cart: { cart: IProduct[], setCart: Function } }) {
   return (
     <MainProducts>
       <FoundProducts><strong>{products.totalItems}</strong> produtos encontrados</FoundProducts>
       <StyledProductList>
         {products.items.map(product => (
-          <CardProduct key={product.id} product={product} />
+          <CardProduct cart={cart} key={product.id} product={product} />
         ))}
       </StyledProductList>
     </MainProducts>

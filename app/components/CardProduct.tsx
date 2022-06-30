@@ -2,6 +2,7 @@ import Image from "next/image";
 import { IProduct } from "../interfaces/IProducts";
 import styled from "styled-components";
 import ITheme from "../interfaces/ITheme";
+import { useEffect } from "react";
 
 const StyledCardProduct = styled.section`
 .product-container {
@@ -80,7 +81,16 @@ button {
 }
 `;
 
-export default function CardProduct({ product }: { product: IProduct }) {
+export default function CardProduct({ product, cart }: { product: IProduct, cart: { cart: IProduct[], setCart: Function } }) {
+
+  
+
+  const addToCart = () => {
+    const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
+    const newCart = [...cartStorage, product];
+    localStorage.setItem("cart", JSON.stringify(newCart));
+  }
+
   return (
     <>
       <StyledCardProduct>
@@ -105,7 +115,7 @@ export default function CardProduct({ product }: { product: IProduct }) {
             </section>
           </section>
         </section>
-        <button>Adicionar</button>
+        <button onClick={() => addToCart()}>Adicionar</button>
       </StyledCardProduct>
     </>
   );
