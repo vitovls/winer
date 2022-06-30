@@ -72,7 +72,7 @@ export default function Home() {
   useEffect(() => {
     const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
     setCart(cartStorage);
-  }, [cart]);
+  }, []);
 
   const filterByPrice = async (data: IResponseProducts, query: number | number[]) => {
     if (typeof query === "number" && query === 40) {
