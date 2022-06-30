@@ -13,11 +13,21 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const [cartQuantity, setCartQuantity] = useState<number>(0);
 
+  const [pagination, setPagination] = useState<{
+    page: number;
+    totalPages: number;
+  }>({
+    page: 1,
+    totalPages: 0,
+  });
+
   const value = {
     cart,
     setCart,
     cartQuantity,
     setCartQuantity,
+    pagination,
+    setPagination,
   }
 
   return (
