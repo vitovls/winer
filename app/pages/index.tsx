@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import FilterByPrice from "../components/FilterByPrice";
 import Header from "../components/Header";
+import Loading from "../components/Loading";
 import ProductList from "../components/ProductList";
 import { IProduct, IResponseProducts } from "../interfaces/IProducts";
 import FoundProducts from "../styles/ProductsFounds";
@@ -14,31 +15,6 @@ const StoreStyled = styled.div`
 
   .main {
     display: flex;
-  }
-
-  .loading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-    
-    .circle-loading {
-      width: 75px;
-      height: 75px;
-      border-radius: 50%;
-      border: 5px solid ${props => props.theme.colors.primary};
-      border-top: 5px solid ${props => props.theme.colors.secondary};
-      border-bottom: 5px solid ${props => props.theme.colors.secondary};
-      animation: spin 1s linear infinite;
-      margin-top: 20px;
-
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    }
   }
 `;
 
@@ -159,10 +135,7 @@ export default function Home() {
           <FilterByPrice actions={{ filter, setFilter }} />
           {
             loading ? (
-              <section className="loading">
-                <h3>Carregando...</h3>
-                <div className="circle-loading" />
-              </section>
+                <Loading height="100vh" width="70vw" />
             ) : 
             (
               products && products.items.length > 0 ? (
