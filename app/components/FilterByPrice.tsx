@@ -42,7 +42,26 @@ const AsideFilterByPrice = styled.aside`
         background-color: ${props => props.theme.colors.primary};
       }
     }
+    
+    button {
+      background-color: ${props => props.theme.colors.primary};
+      color: ${props => props.theme.colors.background};
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.4s ease-in-out;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      width: 100%;
+      font-size: 1.2em;
+      font-weight: bold;
+      &:hover {
+        background-color: ${props => props.theme.colors.quaternary};
+      }
+        
   }
+}
 
   @media (max-width: 768px) {
     display: none;
@@ -55,32 +74,35 @@ const AsideFilterByPrice = styled.aside`
 `;
 
 
-export default function FilterByPrice() {
+export default function FilterByPrice({ actions }: { actions: { filter: string, setFilter: (value: string) => void } }) {
   return (
     <AsideFilterByPrice>
       <h3>Refine sua busca</h3>
       <p>Por Preço</p>
       <form>
         <div>
-          <input type="radio" id="40" name="filter_by_price" value="40" />
+          <input onClick={() => actions.setFilter("40")} type="radio" id="40" name="filter_by_price" value="40" />
           <label htmlFor="40">Até 40</label>
         </div>
         <div>
-          <input type="radio" id="60" name="filter_by_price" value="60" />
+          <input onClick={() => actions.setFilter("60")} type="radio" id="60" name="filter_by_price" value="60" />
           <label htmlFor="60">De 40 até 60</label>
         </div>
         <div>
-          <input type="radio" id="200" name="filter_by_price" value="200" />
+          <input onClick={() => actions.setFilter("200")} type="radio" id="200" name="filter_by_price" value="200" />
           <label htmlFor="200">De 100 até 200</label>
         </div>
         <div>
-          <input type="radio" id="500" name="filter_by_price" value="500" />
+          <input onClick={() => actions.setFilter("500")} type="radio" id="500" name="filter_by_price" value="500" />
           <label htmlFor="500">De 200 até 500</label>
         </div>
         <div>
-          <input type="radio" id="1000" name="filter_by_price" value="1000" />
+          <input onClick={() => actions.setFilter("1000")} type="radio" id="1000" name="filter_by_price" value="1000" />
           <label htmlFor="1000">Acima de R$500</label>
         </div>
+        <button onClick={() => actions.setFilter("")}>
+          Limpar Filtros
+        </button>
       </form>
     </AsideFilterByPrice>
   );
