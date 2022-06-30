@@ -11,11 +11,6 @@ const HeaderStyled = styled.header`
 
   a {
     cursor: pointer;
-
-    &:hover {
-      border-bottom: 2px solid ${props => props.theme.colors.primary};
-      transition: 0.2s ease-in-out;
-    }
   }
   
   .selected-link {
@@ -28,7 +23,12 @@ const HeaderStyled = styled.header`
     justify-content: space-between;
     padding: 20px;
     width: 500px;
-  }
+
+    a:hover {
+        border-bottom: 2px solid ${props => props.theme.colors.primary};
+        transition: 0.2s ease-in-out;
+      }
+    }
 
   .links-user {
     display: flex;
@@ -36,6 +36,23 @@ const HeaderStyled = styled.header`
     align-items: center;
     width: 252px;
     padding: 15px 15px 20px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0;
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .links-header {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      a {
+        margin-bottom: 20px;
+      }
   }
 `;
 
