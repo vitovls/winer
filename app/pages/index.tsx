@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import FilterByPrice from "../components/FilterByPrice";
 import Header from "../components/Header";
 import ProductList from "../components/ProductList";
 import { IProduct, IResponseProducts } from "../interfaces/IProducts";
 import FoundProducts from "../styles/ProductsFounds";
+import AppContext from "../utils/AppContext";
 
 
 const StoreStyled = styled.div`
@@ -66,7 +67,7 @@ export default function Home() {
 
   const [filter, setFilter] = useState("");
 
-  const [cart, setCart] = useState<IProduct[]>([]);
+  const {cart, setCart} = useContext(AppContext)
 
   useEffect(() => {
     const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -165,7 +166,7 @@ export default function Home() {
             ) : 
             (
               products && products.items.length > 0 ? (
-                <ProductList products={products} cart={{cart, setCart}} />
+                <ProductList products={products} />
               ) : (
                 <NotFound>
                   <Image src="/sad-wine.png" alt="Not Found" width={300} height={300} />

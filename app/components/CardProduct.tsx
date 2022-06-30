@@ -3,6 +3,8 @@ import { IProduct } from "../interfaces/IProducts";
 import styled from "styled-components";
 import ITheme from "../interfaces/ITheme";
 import { useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const StyledCardProduct = styled.section`
 .product-container {
@@ -15,6 +17,7 @@ const StyledCardProduct = styled.section`
   align-items: center;
   justify-content: center;
   height: 350px;
+  cursor: pointer;
 }
 
 .product-title {
@@ -81,9 +84,9 @@ button {
 }
 `;
 
-export default function CardProduct({ product, cart }: { product: IProduct, cart: { cart: IProduct[], setCart: Function } }) {
+export default function CardProduct({ product }: { product: IProduct }) {
 
-  
+  const router = useRouter()
 
   const addToCart = () => {
     const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
@@ -92,8 +95,8 @@ export default function CardProduct({ product, cart }: { product: IProduct, cart
   }
 
   return (
-    <>
-      <StyledCardProduct>
+    <StyledCardProduct>
+      <div onClick={() => router.push(`/product/${product.id}`)}>
         <section className="product-container">
           <Image width="200px" height="180px" src={product.image} />
           <h3 className="product-title">{product.name}</h3>
@@ -111,12 +114,12 @@ export default function CardProduct({ product, cart }: { product: IProduct, cart
               </p>
             </section>
             <section className="product-price-no-member-container">
-                NÃO SÓCIO R$ {product.priceNonMember}
+              NÃO SÓCIO R$ {product.priceNonMember}
             </section>
           </section>
         </section>
-        <button onClick={() => addToCart()}>Adicionar</button>
-      </StyledCardProduct>
-    </>
+      </div>
+      <button onClick={() => addToCart()}>Adicionar</button>
+    </StyledCardProduct>
   );
 }

@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import { IProduct, IResponseProducts } from "../interfaces/IProducts";
 import FoundProducts from "../styles/ProductsFounds";
+import AppContext from "../utils/AppContext";
 import CardProduct from "./CardProduct";
 
 const MainProducts = styled.div`
@@ -24,13 +26,16 @@ const StyledProductList = styled.section`
 `;
 
 
-export default function ProductList({ products, cart }: { products: IResponseProducts, cart: { cart: IProduct[], setCart: Function } }) {
+export default function ProductList({ products }: { products: IResponseProducts }) {
+
+  const { cart, setCart } = useContext(AppContext);
+
   return (
     <MainProducts>
       <FoundProducts><strong>{products.totalItems}</strong> produtos encontrados</FoundProducts>
       <StyledProductList>
         {products.items.map(product => (
-          <CardProduct cart={cart} key={product.id} product={product} />
+          <CardProduct key={product.id} product={product} />
         ))}
       </StyledProductList>
     </MainProducts>
