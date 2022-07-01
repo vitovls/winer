@@ -23,6 +23,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  const [search, setSearch] = useState<boolean>(false);
+
+  const [filter, setFilter] = useState<string>("");
+
+  const [query, setQuery] = useState<string>("");
+
   const value = {
     cart,
     setCart,
@@ -32,6 +38,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     setPagination,
     showModal,
     setShowModal,
+    search,
+    setSearch,
+    filter,
+    setFilter,
+    query,
+    setQuery,
   }
 
   return (

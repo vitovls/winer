@@ -1,7 +1,7 @@
 import React from "react";
 import { IProduct } from "../interfaces/IProducts";
 
-type pagination = {
+export type pagination = {
   page: number;
   totalPages: number;
 }
@@ -15,6 +15,10 @@ type AppContextType = {
   setPagination: (pagination: pagination) => void;
   showModal: boolean;
   setShowModal: (showModal: boolean) => void;
+  filter: string;
+  setFilter: (filter: string) => void;
+  query: string;
+  setQuery: (query: string) => void;
 }
 
 const AppContext = React.createContext<AppContextType>({
@@ -29,6 +33,10 @@ const AppContext = React.createContext<AppContextType>({
   setPagination: () => {},
   showModal: false,
   setShowModal: () => {},
+  filter: "",
+  setFilter: () => {},
+  query: "",
+  setQuery: () => {},
 });
 
 export default AppContext;

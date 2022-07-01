@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { IProduct } from "../interfaces/IProducts";
 import AppContext from "../utils/AppContext";
 
 const HeaderStyled = styled.header`
@@ -119,13 +118,34 @@ const HeaderStyled = styled.header`
 
 export default function Header() {
 
-  const { cart, cartQuantity, setCartQuantity } = useContext(AppContext);
+  const { cart,
+    cartQuantity,
+    setCartQuantity,
+    setShowModal,
+    setFilter,
+    query,
+    setQuery } = useContext(AppContext);
 
-  const { setShowModal } = useContext(AppContext);
+  const [showInputSearch, setShowInputSearch] = useState(false);
+
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     setCartQuantity(cart.length);
   }, [cart]);
+
+  const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearch(value);
+  }
+
+  const clickToSearch = () => {
+    setQuery("")
+    setTimeout(() => {
+      setQuery(search)
+      setSearch("")
+    }, 300);
+  }
 
   return (
     <HeaderStyled>
@@ -153,9 +173,25 @@ export default function Header() {
         </a>
       </section>
       <section className="links-user">
-        <a className="links-user-search">
-          <Image width="56px" height="56px" src="/search-interface-symbol.png" />
-        </a>
+        {
+          showInputSearch ? (
+            <div className="container-search">
+              <input
+                type="text"
+                placeholder="Buscar"
+                onChange={(e) => handleChangeSearch(e)}
+                value={search}
+              />
+              <button onClick={() => clickToSearch()}>
+                <Image width="20px" height="20px" src="/search.png" />
+              </button>
+            </div>
+          ) : (
+            <button onClick={() => setShowInputSearch(true)} className="">
+              <Image width="56px" height="56px" src="/search.png" />
+            </button>
+          )
+        }
         <a className="links-user-person">
           <Image width="56px" height="56px" src="/user.png" />
         </a>

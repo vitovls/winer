@@ -8,11 +8,12 @@ import Pagination from "../components/Pagination";
 import ProductList from "../components/ProductList";
 import { IProduct, IResponseProducts } from "../interfaces/IProducts";
 import AppContext from "../utils/AppContext";
-import isNumber from "../utils/isNumber";
 import fetchApi from "../utils/api/fetchApi"
 import paginateArray10In10 from "../utils/paginateArray10In10";
 import StoreStyled from "../styles/store.styled";
 import NotFoundProducts from "../styles/NotFoundProducts.styled";
+import filterByName from "../utils/filterByName";
+import filterByPrice from "../utils/filterByPrice";
 
 export default function Home() {
 
@@ -28,7 +29,8 @@ export default function Home() {
     setPagination,
     showModal,
     filter,
-    setFilter } = useContext(AppContext)
+    setFilter,
+    query } = useContext(AppContext)
 
 
   const setDataFilter = (data: IProduct[]) => {
@@ -41,57 +43,55 @@ export default function Home() {
       totalItems: data.length,
     });
     setPagination({
-      page: 1,
+      page: page,
       totalPages: Math.ceil(data.length / 10),
     });
   }
 
-  const filterByPrice = async (data: IResponseProducts, query: number | number[]) => {
-    if (typeof query === "number" && query === 40) {
-      const dataFilter = data.items.filter((item: IProduct) => item.priceMember <= query);
-      return setDataFilter(dataFilter);
-    }
-    if (typeof query === "number" && query === 1000) {
-      const dataFilter = data.items.filter((item: IProduct) => item.priceMember >= query);
-      return setDataFilter(dataFilter);
-    }
-    const [min, max] = query as number[];
-    const dataFilter = data.items.filter((item: IProduct) => item.priceMember >= min && item.priceMember <= max);
-    return setDataFilter(dataFilter);
-  }
-
-
-  const filterDataByPrice = async (filter: string) => {
-    const data = await fetchApi.all()
+  const filterDataByPrice = (data: IResponseProducts, filter: string) => {
+    let dataFilter
     switch (filter) {
       case "40":
-        filterByPrice(data, 40);
+        dataFilter = filterByPrice(data.items, 40);
         break;
       case "60":
-        filterByPrice(data, [40, 60]);
+        dataFilter = filterByPrice(data.items, [40, 60]);
         break;
       case "200":
-        filterByPrice(data, [100, 200]);
+        dataFilter = filterByPrice(data.items, [60, 200]);
         break;
       case "500":
-        filterByPrice(data, [200, 500]);
+        dataFilter = filterByPrice(data.items, [200, 500]);
         break;
-      case "1000":
-        filterByPrice(data, 1000);
       default:
+        dataFilter = filterByPrice(data.items, 1000);
         break;
     }
+    return dataFilter;
   }
 
-  const filterDataByName = (filter: string) => {
-    console.log(filter)
+  const filterDataByName = (data: IResponseProducts, query: string) => {
+    return filterByName(data.items, query);
   }
 
-  const filterDataBy = () => {
-    if (isNumber(filter)) {
-      return filterDataByPrice(filter);
-    } else {
-      return filterDataByName(filter);
+  const filterDataByNameAndPrice = (data: IResponseProducts, filter: string, query: string) => {
+    const dataFilterByPrice = filterDataByPrice(data, filter);
+    return filterByName(dataFilterByPrice, query);
+  }
+
+  const filterDataBy = async () => {
+    const data = await fetchApi.all()
+    if (filter && !query) {
+      const dataFilter = filterDataByPrice(data, filter);
+      return setDataFilter(dataFilter);
+    }
+    if (!filter && query) {
+      const dataFilter = filterDataByName(data, query);
+      return setDataFilter(dataFilter);
+    }
+    if (filter && query) {
+      const dataFilter = filterDataByNameAndPrice(data, filter, query);
+      return setDataFilter(dataFilter);
     }
   }
 
@@ -107,19 +107,21 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      if (filter) {
-        filterDataBy().then(() => setLoading(false));
+      if(filter || query) {
+        filterDataBy()
+      } else {
+        fetchDataApi()
       }
-      fetchDataApi().then(() => setLoading(false));
+      setLoading(false);
     }, 300);
-  }, [filter, page])
+  }, [filter, query, page])
 
   useEffect(() => {
     setPagination({
       page: 1,
       totalPages,
     });
-  }, [filter])
+  }, [filter, query])
 
   useEffect(() => {
     const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
