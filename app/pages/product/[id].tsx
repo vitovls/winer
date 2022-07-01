@@ -159,6 +159,10 @@ const ProductPageStyled = styled.div`
   .btn-container-mobile {
     display: none;
   }
+  
+  .container-mobile-price {
+    display: none;
+  }
 
   @media (max-width: 768px) {
     height: 120vh;
