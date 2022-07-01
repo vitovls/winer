@@ -23,6 +23,18 @@ const LoadingStyles = styled.div`
     }
   }
 }
+
+  @media (max-width: 768px) {
+    .loading {
+      .circle-loading {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+
+
 `;
 
 export default function Loading({height, width}: {height: string, width: string}) {

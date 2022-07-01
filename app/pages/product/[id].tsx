@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import Header from "../../components/Header"
 import Loading from "../../components/Loading"
+import ModalLinks from "../../components/ModalLinks"
 import { IProduct } from "../../interfaces/IProducts"
 import AppContext from "../../utils/AppContext"
 
@@ -81,7 +82,7 @@ const ProductPageStyled = styled.div`
       font-size: 1rem;
       color: ${props => props.theme.colors.grey};
       padding: 2px 0 20px 0;
-      weight: bold;
+      font-weight: bold;
     }
 
     .comment-section {
@@ -149,7 +150,138 @@ const ProductPageStyled = styled.div`
 
       }
     }
+  }
 
+  .nav-container-mobile {
+    display: none;
+  }
+
+  .btn-container-mobile {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    height: 120vh;
+
+    h2.name-product {
+      font-size: 15px;
+    }
+
+    .back-btn {
+      display: none;
+    }
+
+    .container {
+      flex-direction: column;
+    }
+
+    .container-details {
+      display: flex;
+      padding: 5px 0;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+    }
+
+    .container-infos {
+      width: 100%;
+    }
+
+    .container-price {
+      display: none;
+    }
+
+    .nav-container {
+      display: none;
+    }
+
+    .nav-container-mobile {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+      padding: 20px 0;
+
+      a {
+        text-decoration: none;
+        color: ${props => props.theme.colors.quaternary};
+        font-weight: bold;
+      }
+
+      span {
+        color: ${props => props.theme.colors.grey};
+      }
+    }
+
+    .content {
+      h2 {
+        display: none;
+      }
+    }
+
+    .comment-section {
+      .btn-container {
+        display: none;
+      }
+    }
+
+    .container-mobile-price {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 20px 3px 20px;
+      position: fixed;
+      bottom: 0;
+      background-color: ${props => props.theme.colors.white};
+      border-top: 1px solid ${props => props.theme.colors.grey};
+      align-items: center;
+    }
+
+    .container-mobile-price-discount {
+      background-color: ${props => props.theme.colors.tertiary};
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      font-size: .75rem;
+      color: ${props => props.theme.colors.white};
+      padding: 2px;
+    }
+
+    .container-mobile-price-content {
+    }
+
+    .container-mobile-price-no-discount {
+      font-size: .8rem;
+      margin-top: 10px;
+      padding: 2px;
+      text-decoration: line-through;
+    }
+
+    .container-mobile-price-member {
+      color: ${props => props.theme.colors.quaternary};
+      display: flex;
+      align-items: baseline;
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .container-mobile-price-no-member {
+      font-size: .6rem;
+      Color: ${props => props.theme.colors.grey};
+    }
+
+    .container-mobile-price-btn {
+      width: 50%;
+      height: 3rem;
+      border-radius: 5px;
+      background-color: ${props => props.theme.colors.secondary};
+      color: ${props => props.theme.colors.white};
+      font-size: 1rem;
+      font-family: ${props => props.theme.fonts.secondary};
+      border: none;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -158,7 +290,7 @@ export default function Product() {
 
   const router = useRouter()
 
-  const { cart, setCart } = useContext(AppContext)
+  const { cart, setCart, showModal } = useContext(AppContext)
 
   const [product, setProduct] = useState<IProduct[]>()
 
@@ -262,80 +394,111 @@ export default function Product() {
 
   return (
     <div>
-    <Header />
-    {
-      loading ?
-      <Loading height="100vh" width="" />
-      :
-      <ProductPageStyled>
-      <div className="back-btn">
-        <Link href="/">
-          <div>
-            <span>{"<"}</span>
-            <span>Voltar</span>
-          </div>
-        </Link>
-      </div>
+      <Header />
       {
-        product && product?.length > 0 && (
-          <div className="container">
-            <Image className="product-image" src={product[0].image} width="500px" height="500px" />
-            <section className="container-infos">
-              <section className="nav-container">
-                <a>Vinhos</a>
-                <span>{" > "}</span>
-                <a>{product[0].country}</a>
-                <span>{" > "}</span>
-                <span>{product[0].region}</span>
-              </section>
-              <div>
-                <h2 className="name-product">{product[0].name}</h2>
-                <section className="container-details">
-                  <Image src={product[0].flag} width="20px" height="20px"></Image>
-                  <span>{product[0].country}</span>
-                  <span>{product[0].type}</span>
-                  <span>{product[0].classification}</span>
-                  <span>{filterVolumeOrSize(product[0])}</span>
-                  <span>{ratingStars(product[0].rating)}</span>
-                  <span>{`(${product[0].avaliations})`}</span>
-                </section>
-              </div>
-              <section>
-                <span className="product-price-member">
-                  <h3>R$</h3>
-                  <h3 className="arround-price">{product[0].priceMember.toFixed(2).split(".")[0]}</h3>
-                  <h3>,{product[0].priceMember.toFixed(2).split(".")[1]}</h3>
-                </span>
-                <h3 className="product-price-non-member">
-                  {`NÃO SÓCIO R$${product[0].priceNonMember.toFixed(2)}`}
-                </h3>
-              </section>
-              <section className="comment-section">
-                <h3 className="comment-section-title">Comentário do Sommelier</h3>
-                <p className="comment-section-text">
-                  {product[0].sommelierComment}
-                </p>
-                <section className="btn-container">
-                  <button disabled={disabledButton()} className="btn-container-btn" onClick={() => addOrRemoveProduct("-")}>
-                    <span>-</span>
-                  </button>
-                  <span className="btn-container-quantity">
-                    {quantity}
-                  </span>
-                  <button className="btn-container-btn" onClick={() => addOrRemoveProduct("+")}>
-                    <span>+</span>
-                  </button>
-                  <button onClick={() => addOrRemoveProduct("+")} className="btn-container-text">
-                    Adicionar
-                  </button>
-                </section>
-              </section>
-            </section>
-          </div>
-        )
+        showModal && <ModalLinks />
       }
-    </ProductPageStyled>
-    }
-  </div>
+      {
+        loading ?
+          <Loading height="100vh" width="" />
+          :
+          <ProductPageStyled>
+            <div className="back-btn">
+              <Link href="/">
+                <div>
+                  <span>{"<"}</span>
+                  <span>Voltar</span>
+                </div>
+              </Link>
+            </div>
+            {
+              product && product?.length > 0 && (
+                <div className="container">
+                  <section className="nav-container-mobile">
+                    <a>Vinhos</a>
+                    <span>{" > "}</span>
+                    <a>{product[0].country}</a>
+                    <span>{" > "}</span>
+                    <span>{product[0].region}</span>
+                  </section>
+                  <Image className="product-image" src={product[0].image} width="500px" height="500px" />
+                  <section className="container-infos">
+                    <section className="nav-container">
+                      <a>Vinhos</a>
+                      <span>{" > "}</span>
+                      <a>{product[0].country}</a>
+                      <span>{" > "}</span>
+                      <span>{product[0].region}</span>
+                    </section>
+                    <section className="content">
+                      <h2 className="name-product">{product[0].name}</h2>
+                      <section className="container-details">
+                        <Image src={product[0].flag} width="20px" height="20px"></Image>
+                        <span>{product[0].country}</span>
+                        <span>{product[0].type}</span>
+                        <span>{product[0].classification}</span>
+                        <span>{filterVolumeOrSize(product[0])}</span>
+                        <span>{ratingStars(product[0].rating)}</span>
+                        <span>{`(${product[0].avaliations})`}</span>
+                      </section>
+                    </section>
+                    <section className="container-price">
+                      <span className="product-price-member">
+                        <h3>R$</h3>
+                        <h3 className="arround-price">{product[0].priceMember.toFixed(2).split(".")[0]}</h3>
+                        <h3>,{product[0].priceMember.toFixed(2).split(".")[1]}</h3>
+                      </span>
+                      <h3 className="product-price-non-member">
+                        {`NÃO SÓCIO R$${product[0].priceNonMember.toFixed(2)}`}
+                      </h3>
+                    </section>
+                    <section className="comment-section">
+                      <h3 className="comment-section-title">Comentário do Sommelier</h3>
+                      <p className="comment-section-text">
+                        {product[0].sommelierComment}
+                      </p>
+                      <section className="btn-container">
+                        <button disabled={disabledButton()} className="btn-container-btn" onClick={() => addOrRemoveProduct("-")}>
+                          <span>-</span>
+                        </button>
+                        <span className="btn-container-quantity">
+                          {quantity}
+                        </span>
+                        <button className="btn-container-btn" onClick={() => addOrRemoveProduct("+")}>
+                          <span>+</span>
+                        </button>
+                        <button onClick={() => addOrRemoveProduct("+")} className="btn-container-text">
+                          Adicionar
+                        </button>
+                      </section>
+                    </section>
+                  </section>
+                  <section className="container-mobile-price">
+                    <span className="container-mobile-price-discount">
+                      {product[0].discount}% OFF
+                    </span>
+                    <section className="container-mobile-price-content">
+                      <section className="">
+                        <div className="container-mobile-price-no-discount">
+                          R${product[0].price.toFixed(2)}
+                        </div>
+                        <div className="container-mobile-price-member">
+                          <span>R$</span><h1>{product[0].priceMember.toFixed(2)}</h1>
+                        </div>
+                        <div className="container-mobile-price-no-member">
+                          <p>PREÇO NÃO SÓCIO R${product[0].priceNonMember.toFixed(2)}</p>
+                        </div>
+                      </section>
+                    </section>
+                    <button className="container-mobile-price-btn" onClick={() => addOrRemoveProduct("+")}>
+                      Adicionar
+                    </button>
+                  </section>
+                </div>
+              )
+            }
+          </ProductPageStyled>
+      }
+    </div>
   )
 }

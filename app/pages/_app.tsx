@@ -21,6 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     totalPages: 0,
   });
 
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const value = {
     cart,
     setCart,
@@ -28,6 +30,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     setCartQuantity,
     pagination,
     setPagination,
+    showModal,
+    setShowModal,
   }
 
   return (

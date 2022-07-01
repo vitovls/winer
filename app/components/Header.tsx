@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { IProduct } from "../interfaces/IProducts";
 import AppContext from "../utils/AppContext";
@@ -18,6 +18,10 @@ const HeaderStyled = styled.header`
 
   a {
     cursor: pointer;
+  }
+
+  .links-header-mobile-show-btn {
+    display: none;
   }
 
 
@@ -58,12 +62,66 @@ const HeaderStyled = styled.header`
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     }
   }
+}
+}
 
+
+
+  @media (max-width: 768px) {
+
+    .links-header {
+      display: none;
+    }
+
+    .links-user-search {
+      display: none;
+    }
+
+    .links-user-person {
+      display: none;
+    }
+
+    .links-header-mobile-show-btn {
+      display: flex;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .links-user {
+      width: 5rem;
+      padding: 10px;
+    }
+
+    .links-user-cart {
+      width: 5rem;
+    }
+
+    .links-user-personcart {
+      position: relative;
+    }
+    
+    .cart-icon {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      background-color: ${props => props.theme.colors.white};
+      border-radius: 50%;
+      padding: 5px;
+      font-size: 12px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      color: ${props => props.theme.colors.secondary};
+      font-weight: bold;
+    }
+  }
 `;
 
 export default function Header() {
 
   const { cart, cartQuantity, setCartQuantity } = useContext(AppContext);
+
+  const { setShowModal } = useContext(AppContext);
 
   useEffect(() => {
     setCartQuantity(cart.length);
@@ -71,6 +129,9 @@ export default function Header() {
 
   return (
     <HeaderStyled>
+      <button onClick={() => setShowModal(true)} className="links-header-mobile-show-btn">
+        <Image width="30px" height="30px" src="/mobile-show.png" />
+      </button>
       <Image className="logo" width="150px" height="150px" src="/wine-logo.png" />
       <section className="links-header">
         <a>
@@ -78,7 +139,7 @@ export default function Header() {
         </a>
         <Link href="/">
           <a className="selected-link">
-          Loja
+            Loja
           </a>
         </Link>
         <a>
@@ -92,13 +153,13 @@ export default function Header() {
         </a>
       </section>
       <section className="links-user">
-        <a>
+        <a className="links-user-search">
           <Image width="56px" height="56px" src="/search-interface-symbol.png" />
         </a>
-        <a>
+        <a className="links-user-person">
           <Image width="56px" height="56px" src="/user.png" />
         </a>
-        <a className="cart">
+        <a className="links-user-personcart">
           <Image width="56px" height="56px" src="/winebox.png" />
           <span className="cart-icon">
             {cartQuantity}

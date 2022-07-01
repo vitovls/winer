@@ -13,6 +13,8 @@ type AppContextType = {
   setCartQuantity: (cartQuantity: number) => void;
   pagination: pagination;
   setPagination: (pagination: pagination) => void;
+  showModal: boolean;
+  setShowModal: (showModal: boolean) => void;
 }
 
 const AppContext = React.createContext<AppContextType>({
@@ -25,6 +27,8 @@ const AppContext = React.createContext<AppContextType>({
     totalPages: 0,
   },
   setPagination: () => {},
+  showModal: false,
+  setShowModal: () => {},
 });
 
 export default AppContext;

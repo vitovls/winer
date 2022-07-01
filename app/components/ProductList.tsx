@@ -27,9 +27,6 @@ const StyledProductList = styled.section`
 
 
 export default function ProductList({ products }: { products: IResponseProducts }) {
-
-  const { cart, setCart } = useContext(AppContext);
-
   return (
     <MainProducts>
       <FoundProducts><strong>{products.totalItems}</strong> produtos encontrados</FoundProducts>

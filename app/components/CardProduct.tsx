@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { IProduct } from "../interfaces/IProducts";
 import styled from "styled-components";
-import ITheme from "../interfaces/ITheme";
-import { useContext, useEffect } from "react";
-import Link from "next/link";
+import { useContext } from "react";
 import { useRouter } from "next/router";
 import AppContext from "../utils/AppContext";
 
@@ -47,7 +45,7 @@ const StyledCardProduct = styled.section`
     align-items: center;
     font-size: 11px;
     padding: 10px 5px;
-    weight: bold;
+    font-weight: bold;
 
     .product-price-member {
       padding: 0 5px;
@@ -83,6 +81,11 @@ button {
   cursor: pointer;
   width: 100%;
 }
+
+@media (max-width: 768px) {
+  padding: 0 0 0 20px;
+}
+
 `;
 
 export default function CardProduct({ product }: { product: IProduct }) {

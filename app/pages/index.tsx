@@ -4,6 +4,7 @@ import styled from "styled-components";
 import FilterByPrice from "../components/FilterByPrice";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
+import ModalLinks from "../components/ModalLinks";
 import Pagination from "../components/Pagination";
 import ProductList from "../components/ProductList";
 import { IProduct, IResponseProducts } from "../interfaces/IProducts";
@@ -17,6 +18,14 @@ const StoreStyled = styled.div`
   .main {
     display: flex;
   }
+
+  @media (max-width: 768px) {
+    .main {
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+  
 
 `;
 
@@ -51,7 +60,8 @@ export default function Home() {
       page,
       totalPages,
     },
-    setPagination } = useContext(AppContext)
+    setPagination,
+    showModal } = useContext(AppContext)
 
 
   useEffect(() => {
@@ -168,8 +178,12 @@ export default function Home() {
     });
   }, [filter])
 
+
   return (
     <>
+     {
+        showModal && <ModalLinks />
+     }
       <StoreStyled>
         <Header />
         <>
