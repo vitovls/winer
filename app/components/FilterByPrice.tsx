@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import AppContext from "../utils/AppContext";
 
 const AsideFilterByPrice = styled.aside`
   display: flex;
@@ -74,33 +76,44 @@ const AsideFilterByPrice = styled.aside`
 `;
 
 
-export default function FilterByPrice({ actions }: { actions: { filter: string, setFilter: (value: string) => void } }) {
+export default function FilterByPrice() {
+
+  const {
+    setFilter
+  } = useContext(AppContext)
+
+  const setPriceFilter = (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault();
+    const { value } = e.target as HTMLInputElement;
+    setFilter(value);
+  }
+
   return (
     <AsideFilterByPrice>
       <h3>Refine sua busca</h3>
       <p>Por Preço</p>
       <form>
         <div>
-          <input onClick={() => actions.setFilter("40")} type="radio" id="40" name="filter_by_price" value="40" />
+          <input onClick={(e) => setPriceFilter(e)} type="radio" id="40" name="filter_by_price" value="40" />
           <label htmlFor="40">Até 40</label>
         </div>
         <div>
-          <input onClick={() => actions.setFilter("60")} type="radio" id="60" name="filter_by_price" value="60" />
+          <input onClick={(e) => setPriceFilter(e)} type="radio" id="60" name="filter_by_price" value="60" />
           <label htmlFor="60">De 40 até 60</label>
         </div>
         <div>
-          <input onClick={() => actions.setFilter("200")} type="radio" id="200" name="filter_by_price" value="200" />
+          <input onClick={(e) => setPriceFilter(e)} type="radio" id="200" name="filter_by_price" value="200" />
           <label htmlFor="200">De 100 até 200</label>
         </div>
         <div>
-          <input onClick={() => actions.setFilter("500")} type="radio" id="500" name="filter_by_price" value="500" />
+          <input onClick={(e) => setPriceFilter(e)} type="radio" id="500" name="filter_by_price" value="500" />
           <label htmlFor="500">De 200 até 500</label>
         </div>
         <div>
-          <input onClick={() => actions.setFilter("1000")} type="radio" id="1000" name="filter_by_price" value="1000" />
+          <input onClick={(e) => setPriceFilter(e)} type="radio" id="1000" name="filter_by_price" value="1000" />
           <label htmlFor="1000">Acima de R$500</label>
         </div>
-        <button onClick={() => actions.setFilter("")}>
+        <button onClick={(e) => setPriceFilter(e)}>
           Limpar Filtros
         </button>
       </form>
