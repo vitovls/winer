@@ -10,7 +10,7 @@ import { IProduct, IResponseProducts } from "../interfaces/IProducts";
 import AppContext from "../utils/AppContext";
 import fetchApi from "../utils/api/fetchApi"
 import paginateArray10In10 from "../utils/paginateArray10In10";
-import StoreStyled from "../styles/store.styled";
+import StoreStyled from "../styles/Store.styled";
 import NotFoundProducts from "../styles/NotFoundProducts.styled";
 import filterByName from "../utils/filterByName";
 import filterByPrice from "../utils/filterByPrice";
@@ -112,8 +112,8 @@ export default function Home() {
       } else {
         fetchDataApi()
       }
-      setLoading(false);
     }, 300);
+    setLoading(false);
   }, [filter, query, page])
 
   useEffect(() => {
