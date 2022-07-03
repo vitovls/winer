@@ -9,5 +9,5 @@ export default function priceWithDiscount(price:number, discount:number, type?:s
   if (type === "dec") {
     return priceDiscountDec;
   }
-  return priceDiscount;
+  return priceDiscount.replace(".", ",");
 }
