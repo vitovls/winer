@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-import FilterByPrice from "../components/FilterByPrice";
+import AsideFilter from "../components/AsideFilter";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
 import ModalLinks from "../components/ModalLinks";
@@ -41,10 +41,6 @@ export default function Home() {
       itemsPerPage: 10,
       page: page,
       totalItems: data.length,
-    });
-    setPagination({
-      page: page,
-      totalPages: Math.ceil(data.length / 10),
     });
   }
 
@@ -117,13 +113,6 @@ export default function Home() {
   }, [filter, query, page])
 
   useEffect(() => {
-    setPagination({
-      page: 1,
-      totalPages,
-    });
-  }, [filter, query])
-
-  useEffect(() => {
     const cartStorage = JSON.parse(localStorage.getItem("cart") || "[]");
     setCart(cartStorage);
   }, []);
@@ -137,7 +126,7 @@ export default function Home() {
         <Header />
         <>
           <section className="main">
-            <FilterByPrice actions={{ filter, setFilter }} />
+            <AsideFilter />
             {
               loading ? (
                 <Loading height="100vh" width="70vw" />

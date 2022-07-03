@@ -2,7 +2,7 @@ import { useContext } from "react";
 import styled from "styled-components";
 import AppContext from "../utils/AppContext";
 
-const AsideFilterByPrice = styled.aside`
+const AsideFilterStyled = styled.aside`
   display: flex;
   flex-direction: column;
   width: 20%;
@@ -76,20 +76,19 @@ const AsideFilterByPrice = styled.aside`
 `;
 
 
-export default function FilterByPrice() {
+export default function asideFilter() {
 
   const {
     setFilter
   } = useContext(AppContext)
 
   const setPriceFilter = (e: React.SyntheticEvent<EventTarget>) => {
-    e.preventDefault();
     const { value } = e.target as HTMLInputElement;
     setFilter(value);
   }
 
   return (
-    <AsideFilterByPrice>
+    <AsideFilterStyled>
       <h3>Refine sua busca</h3>
       <p>Por Preço</p>
       <form>
@@ -117,6 +116,6 @@ export default function FilterByPrice() {
           Limpar Filtros
         </button>
       </form>
-    </AsideFilterByPrice>
+    </AsideFilterStyled>
   );
 }
