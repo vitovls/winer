@@ -46,11 +46,13 @@ export default function Home() {
 
   const filterDataByPrice = (data: IResponseProducts, filter: string) => {
     let dataFilter
+
     switch (filter) {
       case "40":
         dataFilter = filterByPrice(data.items, 40);
         break;
-      case "60":
+        case "60":
+        console.log(data.items)
         dataFilter = filterByPrice(data.items, [40, 60]);
         break;
       case "200":
@@ -62,7 +64,7 @@ export default function Home() {
       default:
         dataFilter = filterByPrice(data.items, 1000);
         break;
-    }
+      }
     return dataFilter;
   }
 
@@ -103,7 +105,7 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      if(filter || query) {
+      if (filter || query) {
         filterDataBy()
       } else {
         fetchDataApi()

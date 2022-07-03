@@ -2,10 +2,21 @@ import { IProduct } from "../interfaces/IProducts";
 import priceWithDiscount from "./priceWithDiscount";
 
 
-export default function filterByPrice(data: IProduct[], price: number | number[]) {
+export default function filterByPrice(data: IProduct[], price: number | number[]):IProduct[] {
   if (Array.isArray(price)) {
     const [min, max] = price;
-    return data.filter((item) => Number(priceWithDiscount(item.price, item.discount)) >= min && Number(priceWithDiscount(item.price, item.discount)) <= max)
+    const newData = data.filter((item) => item.price >= min && item.price <= max)
+    console.log(newData)
+    return newData
   }
-  return data.filter(item => Number(priceWithDiscount(item.price, item.discount)) === price);
+  if (price === 40) {
+    const newData = data.filter((item) => item.price <= price)
+    console.log(newData)
+    return newData
+  }
+  else {
+    const newData = data.filter((item) => item.price >= price)
+    console.log(newData)
+    return newData
+  }
 }
