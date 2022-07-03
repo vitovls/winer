@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import AppContext from "../utils/AppContext";
+import priceWithDiscount from "../utils/priceWithDiscount";
 
 const StyledCardProduct = styled.section`
 .product-container {
@@ -108,7 +109,7 @@ export default function CardProduct({ product }: { product: IProduct }) {
           <Image width="200px" height="180px" src={product.image} />
           <h3 className="product-title">{product.name}</h3>
           <section className="product-price">
-            <span className="product-original-price">R${product.price}</span>
+            <span className="product-original-price">R${product.price.toFixed(2)}</span>
             <span className="product-discount-porcetage">{product.discount}% OFF</span>
             <section className="product-price-member-container">
               <h3 className="product-text-member">
@@ -116,12 +117,20 @@ export default function CardProduct({ product }: { product: IProduct }) {
               </h3>
               <p className="product-price-member">
                 R$
-                <strong>{product.priceMember.toFixed(2).split(".")[0]}</strong>
-                ,{product.priceMember.toFixed(2).split(".")[1]}
+                <strong>
+                {
+                  priceWithDiscount(product.priceMember, product.discount, "int")
+                }
+                </strong>
+                ,
+                {priceWithDiscount(product.priceMember, product.discount, "dec")}
               </p>
             </section>
             <section className="product-price-no-member-container">
-              NÃO SÓCIO R$ {product.priceNonMember}
+              NÃO SÓCIO R$ 
+              {
+                priceWithDiscount(product.price, product.discount, "")
+              }
             </section>
           </section>
         </section>

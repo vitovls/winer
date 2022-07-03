@@ -8,6 +8,7 @@ import Loading from "../../components/Loading"
 import ModalLinks from "../../components/ModalLinks"
 import { IProduct } from "../../interfaces/IProducts"
 import AppContext from "../../utils/AppContext"
+import priceWithDiscount from "../../utils/priceWithDiscount"
 
 const ProductPageStyled = styled.div`
   .back-btn {
@@ -449,11 +450,15 @@ export default function Product() {
                     <section className="container-price">
                       <span className="product-price-member">
                         <h3>R$</h3>
-                        <h3 className="arround-price">{product[0].priceMember.toFixed(2).split(".")[0]}</h3>
-                        <h3>,{product[0].priceMember.toFixed(2).split(".")[1]}</h3>
+                        <h3 className="arround-price">{
+                          priceWithDiscount(product[0].priceMember, product[0].discount, "int")
+                        }</h3>
+                        <h3>,{priceWithDiscount(product[0].priceMember, product[0].discount, "dec")}</h3>
                       </span>
                       <h3 className="product-price-non-member">
-                        {`NÃO SÓCIO R$${product[0].priceNonMember.toFixed(2)}`}
+                        {`NÃO SÓCIO R$${
+                          priceWithDiscount(product[0].priceNonMember, product[0].discount)
+                          }`}
                       </h3>
                     </section>
                     <section className="comment-section">
