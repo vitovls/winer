@@ -19,6 +19,8 @@ type AppContextType = {
   setFilter: (filter: string) => void;
   query: string;
   setQuery: (query: string) => void;
+  showInputSearch: boolean;
+  setShowInputSearch: (showInputSearch: boolean) => void;
 }
 
 const AppContext = React.createContext<AppContextType>({
@@ -37,6 +39,8 @@ const AppContext = React.createContext<AppContextType>({
   setFilter: () => {},
   query: "",
   setQuery: () => {},
+  showInputSearch: false,
+  setShowInputSearch: () => {},
 });
 
 export default AppContext;

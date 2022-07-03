@@ -1,5 +1,5 @@
 import type { AppProps } from 'next/app';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import MyHead from '../components/MyHead';
 import { IProduct } from '../interfaces/IProducts';
@@ -8,7 +8,7 @@ import theme from '../styles/theme';
 import AppContext from '../utils/AppContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  
+
   const [cart, setCart] = useState<IProduct[]>([]);
 
   const [cartQuantity, setCartQuantity] = useState<number>(0);
@@ -29,6 +29,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const [query, setQuery] = useState<string>("");
 
+  const [showInputSearch, setShowInputSearch] = useState<boolean>(false);
+
   const value = {
     cart,
     setCart,
@@ -44,19 +46,34 @@ function MyApp({ Component, pageProps }: AppProps) {
     setFilter,
     query,
     setQuery,
+    showInputSearch,
+    setShowInputSearch,
   }
 
-  return (
-    <>
-    <AppContext.Provider value={value}>
-      <MyHead />
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </AppContext.Provider>
-    </>
-  );
-}
+  const detectScroll = () => {
+    if (window.scrollY > 100) {
+      setShowInputSearch(false)
+    }
+  }
 
-export default MyApp;
+  useEffect(() => {
+    window.addEventListener("scroll", detectScroll);
+    return () => {
+      window.removeEventListener("scroll", detectScroll);
+    }
+  }, []);
+
+  return (
+      <>
+        <AppContext.Provider value={value}>
+          <MyHead />
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </AppContext.Provider>
+      </>
+    );
+  }
+
+  export default MyApp;

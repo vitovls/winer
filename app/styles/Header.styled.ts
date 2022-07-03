@@ -38,7 +38,7 @@ const HeaderStyled = styled.header`
   }
 
   .links-user {
-    width: 30%;
+    width: 40%;
     display: flex;
     justify-content: space-between;
     padding: 10px 20px 10px;
@@ -96,7 +96,8 @@ const HeaderStyled = styled.header`
   .search-disabled {
     border: none;
     cursor: pointer;
-    animation: fadeOut 0.5s linear;
+    animation: fadeOut 0.5s linear;   
+    background-color: transparent;
   }
 
   .container-search {
@@ -104,7 +105,7 @@ const HeaderStyled = styled.header`
     align-items: center;
     justify-content: center;
     animation: fadeIn 0.5s linear;
-
+    
     input {
       border: none;
       outline: none;
@@ -130,6 +131,15 @@ const HeaderStyled = styled.header`
       padding: 5px;
       &:hover {
         background-color: ${props => props.theme.colors.primary};
+      }
+    }
+
+    .search-close-input {
+      color: ${props => props.theme.colors.primary};
+
+      &:hover {
+        color: ${props => props.theme.colors.primary};
+        background-color: ${props => props.theme.colors.white};
       }
     }
   }
@@ -224,6 +234,24 @@ const HeaderStyled = styled.header`
         align-items: center;
         width: 20%;
         border-radius: 20%;
+        
+        &:hover {
+          background-color: ${props => props.theme.colors.white};
+          color: ${props => props.theme.colors.white};
+        }
+      }
+
+      .search-close-input {
+        color: ${props => props.theme.colors.white};
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: ${props => props.theme.colors.primary};
+
+        &:hover {
+          background-color: inherit;
+          color: ${props => props.theme.colors.white};
+        }
       }
     }
   }
