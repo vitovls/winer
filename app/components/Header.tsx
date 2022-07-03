@@ -11,9 +11,9 @@ export default function Header() {
     cartQuantity,
     setCartQuantity,
     setShowModal,
-    setQuery } = useContext(AppContext);
-
-  const [showInputSearch, setShowInputSearch] = useState(false);
+    setQuery,
+    showInputSearch,
+    setShowInputSearch } = useContext(AppContext);
 
   const [search, setSearch] = useState("");
 
@@ -31,6 +31,7 @@ export default function Header() {
     setTimeout(() => {
       setQuery(search)
       setSearch("")
+      setShowInputSearch(false)
     }, 300);
   }
 
@@ -39,9 +40,10 @@ export default function Header() {
       <button onClick={() => setShowModal(true)} className="links-header-mobile-show-btn">
         <Image width="30px" height="30px" src="/mobile-show.png" />
       </button>
-      <Link href="/">
+      <a href="/">
         <Image className="logo" width="150px" height="150px" src="/wine-logo.png" />
-      </Link>
+      </a>
+
       <section className="links-header">
         <a>
           Clube
@@ -66,17 +68,20 @@ export default function Header() {
           showInputSearch ? (
             <div className="container-search">
               <input
-                onBlur={() => setShowInputSearch(false)}
                 type="text"
                 placeholder="Buscar"
                 onChange={(e) => handleChangeSearch(e)}
                 value={search}
                 className="search-input"
-              />
-
-                <button className="search-btn" onClick={() => clickToSearch()} >
-                  <Image width="20px" height="20px" src="/search.png" />
-                </button>
+              >
+              </input>
+              <button
+              className="search-close-input"
+              onClick={() => setShowInputSearch(false)}
+              >X</button>
+              <button className="search-btn" onClick={() => clickToSearch()} >
+                <Image width="20px" height="20px" src="/search.png" />
+              </button>
             </div>
           ) : (
             <button onClick={() => setShowInputSearch(true)} className="search-disabled">
