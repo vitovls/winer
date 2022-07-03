@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react'
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import AsideFilter from "../components/AsideFilter";
@@ -42,6 +43,10 @@ export default function Home() {
       page: page,
       totalItems: data.length,
     });
+    setPagination({
+      totalPages: Math.ceil(data.length / 10),
+      page
+    })
   }
 
   const filterDataByPrice = (data: IResponseProducts, filter: string) => {
@@ -51,7 +56,7 @@ export default function Home() {
       case "40":
         dataFilter = filterByPrice(data.items, 40);
         break;
-        case "60":
+      case "60":
         console.log(data.items)
         dataFilter = filterByPrice(data.items, [40, 60]);
         break;
@@ -64,7 +69,7 @@ export default function Home() {
       default:
         dataFilter = filterByPrice(data.items, 1000);
         break;
-      }
+    }
     return dataFilter;
   }
 
